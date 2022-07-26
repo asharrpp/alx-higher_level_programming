@@ -1,62 +1,119 @@
+
+Skip to content
+Pull requests
+Issues
+Marketplace
+Explore
+@Appsorwebs
+jacobgbemi /
+alx-higher_level_programming
+Public
+
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+
+    Insights
+
+alx-higher_level_programming/0x08-python-more_classes/nqueens.py /
+@jacobgbemi
+jacobgbemi N queens
+Latest commit d614a06 12 hours ago
+History
+1 contributor
+executable file 75 lines (61 sloc) 2.06 KB
 #!/usr/bin/python3
+"""Solves the N-queens puzzle.
+Determines all possible solutions to placing N
+N non-attacking queens on an NxN chessboard.
+N must be an integer greater than or equal to 4.
+Attributes:
+    board (list): A list of lists representing the chessboard.
+    solutions (list): A list of lists containing solutions.
+Solutions are represented in the format [[r, c], [r, c], [r, c], [r, c]]
+where `r` and `c` represent the row and column, respectively, where a
+queen must be placed on the chessboard.
 """
-nqueens backtracking program to print the coordinates of n queens
-on an nxn grid such that they are all in non-attacking positions
-"""
+import sys
 
 
-from sys import argv
+class Solution:
+    col = set()
+    positive_diag = set()  # (r + c)
+    negative_diag = set() # (r - c)
+    result = []
+ 
+    def __init__(self, n: int):
+        self__n = n
+
+    def SolveQueens(self):
+        board = [["."] * n for i in range(n)]
+
+        """ def init_board(n):
+            board = []
+            [board.append([]) for i in range(n)]
+            [row.append(' ') for i in range(n) for row in board]
+            return (board)
+        """
+
+        def backtrack(r):
+            if (r == n):
+                copy = [".".join(row) for row in board]
+                result.append(copy)
+                return (0)
+
+            for c in range(n):
+                if c in col or (r + c) in positive_diag or (r - c) in negative_diag:
+                    continue
+                col.add(c)
+                positive_diag.add(r + c)
+                negative_diag.add(r - c)
+                board[r][c] = "Q"
+
+                backtrack(r + 1)
+
+                col.remove(c)
+                positive_diag.remove(r + c)
+                negative_diag.remove(r - c)
+                board[r][c] = "."
+
+        backtrack(0)
+        return (result)
+    
 
 if __name__ == "__main__":
-    a = []
-    if len(argv) != 2:
+    if len(sys.argv) != 2:
         print("Usage: nqueens N")
-        exit(1)
-    if argv[1].isdigit() is False:
+        sys.exit(1)
+    if sys.argv[1].isdigit() is False:
         print("N must be a number")
-        exit(1)
-    n = int(argv[1])
-    if n < 4:
+        sys.exit(1)
+    if int(sys.argv[1]) < 4:
         print("N must be at least 4")
-        exit(1)
+        sys.exit(1)
 
-    # initialize the answer list
-    for i in range(n):
-        a.append([i, None])
+    #board = init_board(int(sys.argv[1]))
+    solutions = Solution(int(sys.argv[1])
+    sol = solutions.SolveQueens()
+    print(sol)
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
 
-    def already_exists(y):
-        """check that a queen does not already exist in that y value"""
-        for x in range(n):
-            if y == a[x][1]:
-                return True
-        return False
+    Terms
+    Privacy
+    Security
+    Status
+    Docs
+    Contact GitHub
+    Pricing
+    API
+    Training
+    Blog
+    About
 
-    def reject(x, y):
-        """determines whether or not to reject the solution"""
-        if (already_exists(y)):
-            return False
-        i = 0
-        while(i < x):
-            if abs(a[i][1] - y) == abs(i - x):
-                return False
-            i += 1
-        return True
-
-    def clear_a(x):
-        """clears the answers from the point of failure on"""
-        for i in range(x, n):
-            a[i][1] = None
-
-    def nqueens(x):
-        """recursive backtracking function to find the solution"""
-        for y in range(n):
-            clear_a(x)
-            if reject(x, y):
-                a[x][1] = y
-                if (x == n - 1):  # accepts the solution
-                    print(a)
-                else:
-                    nqueens(x + 1)  # moves on to next x value to continue
-
-    # start the recursive process at x = 0
-    nqueens(0)
+You have unread notifications
